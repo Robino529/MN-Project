@@ -1,5 +1,6 @@
 .DS_Store
 rl-lib/target
+*.vscode
 *.log
 *.aux
 *.py
