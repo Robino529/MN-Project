@@ -6,12 +6,11 @@ INVARIANT
 	turn : (0..1)
     & square : ((1..3) * (1..3)) +-> (0..1) 
 DEFINITIONS
-win(sq, p) == 
-    (#x.(x : 1..3 & !y.(y : 1..3 => (x|->y)|->p : sq)))     /* Ligne */
-    or (#y.(y : 1..3 & !x.(x : 1..3 => (x|->y)|->p : sq)))  /* Colonne */
-    or (!x.(x : 1..3 => (x|->x)|->p : sq))                  /* Diagonale 1 */
-    or (!x.(x : 1..3 => (x|->(4-x))|->p : sq));             /* Diagonale 2 */
-
+win(p) == 
+    (#x.(x : 1..3 & !y.(y : 1..3 => (x|->y)|->p : square)))     /* Ligne */
+    or (#y.(y : 1..3 & !x.(x : 1..3 => (x|->y)|->p : square)))  /* Colonne */
+    or (!x.(x : 1..3 => (x|->x)|->p : square))                  /* Diagonale 1 */
+    or (!x.(x : 1..3 => (x|->(4-x))|->p : square));             /* Diagonale 2 */
 INITIALISATION 
     turn,square := 0,{}
 OPERATIONS
