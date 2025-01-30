@@ -25,7 +25,7 @@ import de.prob.statespace.Transition;
 
 public class MyProb {
     static Injector INJECTOR = 
-        Guice.createInjector(Stage.DEVELOPMENT, 
+        Guice.createInjector(Stage.PRODUCTION, 
             new AbstractModule(){
                 @Override
                 protected void configure() {
