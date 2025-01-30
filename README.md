@@ -4,7 +4,7 @@
 
 - Check if maven is installed : mvn -version
 
-- If maven is not installer, run sudo apt install maven -y
+- If maven is not installed, run sudo apt install maven -y
 
 ## Run the Project
 
