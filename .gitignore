@@ -2,3 +2,10 @@
 rl-lib/target
 *.log
 *.aux
+*.py
+*.tex
+*.fls
+*.fdb_latexmk
+*.dvi
+*.sty
+
