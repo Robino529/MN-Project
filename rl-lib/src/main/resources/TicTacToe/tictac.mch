@@ -7,10 +7,11 @@ INVARIANT
     & square : ((1..3) * (1..3)) +-> (0..1) 
 DEFINITIONS
 win(sq, p) == 
-    (#x.(x : 1..3 & ( (x|->1)|->p : sq & (x|->2)|->p : sq & (x|->3)|->p : sq )))    /* Ligne */
-    or (#y.(y : 1..3 & ( (1|->y)|->p : sq & (2|->y)|->p : sq & (3|->y)|->p : sq ))) /* Colonne */
-    or ( (1|->1)|->p : sq & (2|->2)|->p : sq & (3|->3)|->p : sq )                   /* Diagonale 1 */
-    or ( (1|->3)|->p : sq & (2|->2)|->p & (3|->1)|->p : sq ) ;                      /* Diagonale 2 */
+    (#x.(x : 1..3 & !y.(y : 1..3 => (x|->y)|->p : sq)))     /* Ligne */
+    or (#y.(y : 1..3 & !x.(x : 1..3 => (x|->y)|->p : sq)))  /* Colonne */
+    or (!x.(x : 1..3 => (x|->x)|->p : sq))                  /* Diagonale 1 */
+    or (!x.(x : 1..3 => (x|->(4-x))|->p : sq));             /* Diagonale 2 */
+
 INITIALISATION 
     turn,square := 0,{}
 OPERATIONS
