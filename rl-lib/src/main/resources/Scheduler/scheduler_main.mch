@@ -50,7 +50,7 @@ step =
         || execution_time := 
             execution_time <+ {pp, ee | pp : active & ee = execution_time(pp) - 1}
         || waiting_time := 
-            waiting_time <+ {pp, ee | pp : dom(waiting_time) & ee = waiting_time(pp) + 1}
+            waiting_time <+ {pp, ee | pp : (waiting \/ ready) & ee = waiting_time(pp) + 1}
         || latency_time := 
             latency_time <+ {pp, ee | pp /: ((waiting \/ active) \/ ready) & ee = latency_time(pp) + 1}
     END
