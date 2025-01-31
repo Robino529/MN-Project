@@ -1,14 +1,21 @@
 * Objectif : 
 
-- L’agent doit apprendre à minimiser le temps d’attente des processus tout en maximisant l’utilisation du CPU.
+    - L'agent doit apprendre à minimiser le temps d'attente des processus tout en maximisant l'utilisation du CPU. Ce dernier ne doit pas rester inactif si des processus sont prêts à être activés.
 
-- scheduler.mch : contient l'ordonnanceur
+    - scheduler.mch : contient l'ordonnanceur
 
-- scheduler_main.mch : utilise l'ordonnanceur en introduisant les notions de temps d'attente et temps d'exécution.
+    - scheduler_main.mch : utilise l'ordonnanceur en introduisant les notions de temps d'attente, de latence et d'exécution.
 
-* La fonction de reward est à définir . Il faut justifier vos choix. Voici un exemple pour vous aider à démarrer, mais ce n'est pas le meilleur.
+* Dans cette spécification :
 
--- Positive (+1) si un processus est exécuté immédiatement après son arrivée.
--- Négative (-1) pour chaque unité de temps où un processus reste en attente.
--- Négative (-5) si active = {} (CPU inutilisé).
--- Bonus (+10) si un processus est terminé avec un faible temps d’attente (autour d'une moyenne).
+    - Un processus peut dépasser son temps d'exécution. Dans ce cas, il bloque le CPU car on ne peut pas exécuter free pour le libérer. Son arrêt doit être forcé par l'arrivé d'un autre processus permettant l'enclenchement de swap suivi de delete. C'est typiquement une situation qu'on devrait éviter. On doit libérer un processus dès qu'il termine (execution_time = 10).
+
+    - On peut interrompre l'exécution d'un processus à tout moment pour prioriser l'exécution d'un processus prêt.  Ceci se fait avec swap. Dans ce cas, le processus se met en mode waiting et attend qu'il soit réactivé de nouveau.  
+
+    - Le temps de latence correspond au temps où un processus n'est pas encore introduit dans le scheduler. Ce temps s'annule quand on execute new et est repris à zéro quand on libère un processus (opération free). On considère qu'un temps de latence est acceptable s'il ne dépasse pas un certain seuil (par exemple, 5 unités de temps).
+
+    - Les actions réalisées entre deux appels à step sont considérées comme étant instantanées. Cependant, il est important de minimiser les opérations superflues. Par exemple, une boucle (new ; delete)* sur le même processus n'a aucun intérêt.
+
+    - L'ordonnancement des processus sera conclu quand tous les processus se soient exécutés au moins une fois. Il faut donner dans ce cas, la séquence optimale selon votre stratégie. 
+
+    - Le temps d'attente n'est pas réinitialisé quand le processus est libéré. Il s'agit d'un temps cumulatif. Contrairement au temps de latence qui est remis à zéro quand un processus est libéré. 

@@ -4,46 +4,43 @@ SETS
 VARIABLES 
         active, ready, waiting
 INVARIANT  
-        active : POW(PID) & ready : POW(PID) & waiting: POW(PID)  &/* the types */
-        active <: PID &
-        ready <: PID   &
-        waiting <: PID &
-        (ready /\ waiting) = {} &
-        active /\ (ready \/ waiting) = {} &
-        card(active) <= 1 &
-        ((active = {})  => (ready = {}))
-              
+        active <: PID 
+        & ready <: PID   
+        & waiting <: PID 
+        & (ready /\ waiting) = {} 
+        & active /\ (ready \/ waiting) = {} 
+        & card(active) <= 1 
+        & ((active = {}) => (ready = {}))       
 INITIALISATION  
 	active := {} || ready := {} || waiting := {}
 OPERATIONS
 new(pp) =
-	PRE
-		pp : PID  &
-		pp /: (active \/ (ready \/ waiting))
+	PRE 
+                pp : (PID - (active \/ (ready \/ waiting)))
 	THEN
-		waiting := (waiting \/ { pp })
+		waiting := waiting \/ {pp}
 	END;
 delete(pp) =
-	PRE
-		pp : waiting 
-	THEN
-		waiting := waiting - { pp }
+	PRE pp : waiting THEN
+		waiting := waiting - {pp}
 	END;	
 activate(rr) =
-        PRE
-                rr : waiting
-        THEN
-                waiting := (waiting - {rr}) ||
+        PRE rr : waiting THEN
+                waiting := waiting - {rr} ||
                 IF (active = {}) THEN
                    active := {rr}
                 ELSE
                    ready := ready \/ {rr} 
                 END
-        END;     	
-swap =
-        PRE
-                active /= {}
-        THEN
+        END;  
+swap(rr) = 
+    PRE active /= {} & rr : ready THEN
+        waiting := waiting \/ active ||
+        ready := ready - {rr} ||
+        active := {rr}
+    END ;   	
+deactivate =
+        PRE active /= {} THEN
                 IF (ready = {}) THEN
                         active := {}
                 ELSE
@@ -54,4 +51,3 @@ swap =
                 END
         END       
 END
-

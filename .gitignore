@@ -1,3 +1,5 @@
+*.prob
+*.txt
 .DS_Store
 rl-lib/target
 *.vscode
