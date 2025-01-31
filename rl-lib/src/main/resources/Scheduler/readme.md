@@ -1,6 +1,6 @@
 # Objectif
 
-* L'agent doit apprendre à minimiser le temps d'attente des processus tout en maximisant l'utilisation du CPU et tout en gardant un temps de latence acceptable. Ce dernier ne doit pas rester inactif si des processus sont prêts à être activés. On considère qu'un temps de latence est acceptable s'il ne dépasse pas considérablement un certain seuil.
+* L'agent doit apprendre à minimiser le temps d'attente des processus tout en maximisant l'utilisation du CPU et tout en gardant un temps de latence acceptable. Le CPU ne doit pas rester inactif si des processus sont prêts à être activés. On considère qu'un temps de latence est acceptable s'il ne dépasse pas considérablement un certain seuil.
 
 * L'ordonnancement des processus sera conclu quand tous les processus se soient exécutés au moins une fois. Il faut donner dans ce cas, la séquence optimale selon votre stratégie.
 

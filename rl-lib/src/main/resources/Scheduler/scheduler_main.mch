@@ -22,7 +22,7 @@ VARIABLES
     tic, waiting_time, execution_time, latency_time
 INVARIANT   
     tic : NAT
-    & waiting_time : PID +-> NAT
+    & waiting_time : PID --> NAT
     & execution_time : PID +-> INT
     & latency_time : PID --> NAT
 INITIALISATION
