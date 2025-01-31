@@ -60,15 +60,9 @@ public class MyProb {
     }
 
     public void printActions(List<Transition> actions){
+        System.out.println();
 		for (Transition transition : actions) {
-			System.out.println(transition.getId() + " : " + transition.getPrettyName() + transition.getParameterValues());
-		}
-		System.out.println();
-    }
-
-    public void printActions(Set<Transition> actions){
-		for (Transition transition : actions) {
-			System.out.println(transition.getId() + " : " + transition.getPrettyName() + transition.getParameterValues());
+			System.out.println(transition.getId() + " : " + transition.getPrettyName() + '(' + transition.getParameterPredicate() + ')');
 		}
 		System.out.println();
     }
