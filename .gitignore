@@ -1,3 +1,4 @@
+*.py
 *.prob
 *.txt
 .DS_Store
