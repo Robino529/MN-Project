@@ -1,4 +1,4 @@
-* Objectif : 
+# Objectif : 
 
     - L'agent doit apprendre à minimiser le temps d'attente des processus tout en maximisant l'utilisation du CPU et tout en gardant un temps de latence acceptable. Ce dernier ne doit pas rester inactif si des processus sont prêts à être activés. On considère qu'un temps de latence est acceptable s'il ne dépasse pas considérablement un certain seuil.
 
@@ -6,7 +6,7 @@
 
     - scheduler_main.mch : utilise l'ordonnanceur en introduisant les notions de temps d'attente, de latence et d'exécution.
 
-* Dans cette spécification :
+# Dans cette spécification :
 
     - Un processus peut dépasser son temps d'exécution. Dans ce cas, il bloque le CPU car on ne peut pas exécuter free pour le libérer. Son arrêt doit être forcé par l'arrivé d'un autre processus permettant l'enclenchement de swap suivi de delete. C'est typiquement une situation qu'on devrait éviter. On doit libérer un processus dès qu'il termine (execution_time = 0).
 
