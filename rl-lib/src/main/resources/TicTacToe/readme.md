@@ -12,7 +12,7 @@
 
 ## Dans cette spécification :
 
-* C'est toujours 0 qui joue en premier. On pourra modifier pour que ce soit aléatoire (0 ou 1) et disposer ainsi d'un apprentissage plus juste. Pour ce faire, changer la clause INITIALISATION en y mettant : trun :: (0..1) || square := {}. Cela aura un impact sur l'initialisation. Plutôt que d'avoir une initialisation possible vous en aurez deux. Il faudra donc redéfinit la méthode initialise de la classe Runner.java. Discutez en avec votre enseignant. 
+* C'est toujours 0 qui joue en premier. On pourra modifier pour que ce soit aléatoire (0 ou 1) et disposer ainsi d'un apprentissage plus juste. Pour ce faire, changez la clause INITIALISATION en y mettant : trun :: (0..1) || square := {}. Cela aura un impact sur l'initialisation. Plutôt que d'avoir une initialisation possible vous en aurez deux. Il faudra donc redéfinir la méthode initialise de la classe Runner.java pour qu'elle en tire une de manière aléatoire. Discutez en avec votre enseignant. 
 
 * L'état de la spécification est représenté par la variable square, c'est une fonction partielle qui affecte à des coordonnée la valeur 0 ou la valeur 1 : ((1..3) * (1..3)) +-> (0..1) 
 
