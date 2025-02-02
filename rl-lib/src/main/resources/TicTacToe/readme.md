@@ -20,7 +20,7 @@
 
 * On a définit une contrainte paramétrique win(p). L'évaluation de cette contrainte dans un état donné permet savoir si p (0 ou 1) a gagné ou pas.
 
-## Exemple de sortie du Runner fourni
+### Exemple de sortie TicTacToeRunner.java
 
 ```
 Load classical B Machine
