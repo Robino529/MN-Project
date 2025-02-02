@@ -32,7 +32,7 @@ L’algorithme doit apprendre une **politique de sélection** qui maximise l’e
 
 | Algorithme | Stratégie | Avantages | Inconvénients |
 |------------|-----------|------------|---------------|
-| **ε-Greedy** | Exploite le meilleur bras \( 1 - \epsilon \) du temps, explore avec \( \epsilon \) | Simple, efficace | Exploration aléatoire |
+| **ε-Greedy** | Exploite le meilleur bras (1 - ε) du temps, explore avec ( ε ) | Simple, efficace | Exploration aléatoire |
 | **UCB (Upper Confidence Bound)** | Sélectionne le bras avec la meilleure confiance | Réduit l'exploration inutile | Moins efficace sur de grands espaces |
 | **Bandit Gradient** | Ajuste dynamiquement la probabilité de sélection avec softmax | Bonne adaptation aux préférences | Plus complexe à implémenter |
 
