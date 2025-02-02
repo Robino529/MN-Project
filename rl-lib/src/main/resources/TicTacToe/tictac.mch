@@ -6,7 +6,7 @@ INVARIANT
 	turn : (0..1)
     & square : ((1..3) * (1..3)) +-> (0..1) 
 DEFINITIONS
-	SET_PREF_MAX_OPERATIONS == 400 ;
+	SET_PREF_MAX_OPERATIONS == 15 ;
     SET_PREF_INVARIANT_CHECKING == FALSE ;
 win(p) == 
     (#x.(x : 1..3 & !y.(y : 1..3 => (x|->y)|->p : square)))     /* Ligne */

@@ -20,7 +20,6 @@ import de.prob.animator.domainobjects.IEvalElement;
 import de.prob.scripting.Api;
 import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
-import de.prob.statespace.Trace;
 import de.prob.statespace.Transition;
 
 public class MyProb {
@@ -36,7 +35,6 @@ public class MyProb {
         );
     private Api api;
     private StateSpace stateSpace ;
-    private Trace trace ; 
 
 	@Inject
 	public MyProb(Api api, String file) {
@@ -47,12 +45,7 @@ public class MyProb {
         System.out.println("Load classical B Machine");
         Path path = Paths.get(getClass().getResource(bMachinePath).toURI());
         stateSpace = api.b_load(path.toAbsolutePath().toString());
-        trace = new Trace(stateSpace);
         System.out.println("Load success");
-    }
-
-    public Trace getTrace(){
-        return this.trace ;
     }
 
     public StateSpace getStateSpace(){
