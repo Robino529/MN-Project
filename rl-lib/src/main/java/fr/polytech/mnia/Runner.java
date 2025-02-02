@@ -49,7 +49,7 @@ public abstract class Runner {
      * transition sans explorer la cible.
      */
     public void showTransition(Transition t){
-        System.out.println("\nTransition : " + t.getId() + " - " + t.getPrettyName());
+        System.out.println("\nTransition : " + t.getId() + " - " + t.getName() + "[" + t.getParameterPredicate() + "]");
         System.out.println("\nSource : ") ; animator.printState(t.getSource()) ;
         System.out.println("\nDestination : ") ; animator.printState(t.getDestination()) ;
     }

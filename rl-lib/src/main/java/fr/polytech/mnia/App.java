@@ -7,9 +7,12 @@ public class App
         // SimpleRunner sr = new SimpleRunner() ;
         // sr.execSequence() ; 
 
-        SchedulerRunner sc = new SchedulerRunner() ;
-        sc.execSequence();
-        
+        // SchedulerRunner sc = new SchedulerRunner() ;
+        // sc.execSequence();
+
+        TicTacToeRunner tr = new TicTacToeRunner() ;
+        tr.execSequence();
+               
         System.exit(0);
     }    
 }
