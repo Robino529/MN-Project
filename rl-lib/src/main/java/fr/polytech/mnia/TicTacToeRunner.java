@@ -17,14 +17,22 @@ public class TicTacToeRunner extends Runner{
      * et l'affiche de manière plus jolie et compréhensible
      */
     public void execSequence() throws Exception {
+        String win1, win0 ;
+        win1 = state.eval("win(1)").toString() ;
+        win0 = state.eval("win(0)").toString() ;
+
         while (
-                state.eval("win(1)").toString().equals("FALSE")
-                & state.eval("win(0)").toString().equals("FALSE")
+                win1.equals("FALSE") 
+                & win0.equals("FALSE")
+                & state.getOutTransitions().size() != 0
         ) {
 			state = state.anyOperation(null).explore();
+            win1 = state.eval("win(1)").toString() ;
+            win0 = state.eval("win(0)").toString() ;
             this.prettyPrintTicTacToe() ;
-            System.out.println("\nwin(1) " + state.eval("win(1)"));
-            System.out.println("win(0) " + state.eval("win(0)") + "\n");
+
+            System.out.println("\nwin(1) " + win1);
+            System.out.println("win(0) " + win0 + "\n");
 		}
     }
 
