@@ -19,3 +19,52 @@
 * Dans TicTacToeRunner.java on vous donne une opération prettyPrintTicTacToe pour afficher la variable square sous une forme plus jolie. Vous avez la liberté sur ce code. Libérez votre imagination !
 
 * On a définit une contrainte paramétrique win(p). L'évaluation de cette contrainte dans un état donné permet savoir si p (0 ou 1) a gagné ou pas.
+
+## Exemple de sortie du Runner fourni
+
+Load classical B Machine
+Load success
+   |   | 0
+---+---+---
+   |   |  
+---+---+---
+   |   |  
+
+win(1) FALSE
+win(0) FALSE
+
+   | 1 | 0
+---+---+---
+   |   |  
+---+---+---
+   |   |  
+
+win(1) FALSE
+win(0) FALSE
+
+   | 1 | 0
+---+---+---
+   |   | 0
+---+---+---
+   |   |  
+
+win(1) FALSE
+win(0) FALSE
+
+   | 1 | 0
+---+---+---
+   | 1 | 0
+---+---+---
+   |   |  
+
+win(1) FALSE
+win(0) FALSE
+
+   | 1 | 0
+---+---+---
+   | 1 | 0
+---+---+---
+   |   | 0
+
+win(1) FALSE
+win(0) TRUE
