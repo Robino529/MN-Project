@@ -22,11 +22,10 @@
 
 ## Exemple de sortie du Runner fourni
 
+```
 Load classical B Machine
-
 Load success
 
-```
    |   | 0
 ---+---+---
    |   |  
