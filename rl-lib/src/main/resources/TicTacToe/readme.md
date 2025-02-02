@@ -26,7 +26,7 @@ Load classical B Machine
 
 Load success
 
-`
+```
    |   | 0
 ---+---+---
    |   |  
@@ -70,4 +70,4 @@ win(0) FALSE
    |   | 0
 
 win(1) FALSE
-win(0) TRUE`
+win(0) TRUE
