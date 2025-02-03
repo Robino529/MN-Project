@@ -12,4 +12,4 @@ rl-lib/target
 *.fdb_latexmk
 *.dvi
 *.sty
-
+.idea/
