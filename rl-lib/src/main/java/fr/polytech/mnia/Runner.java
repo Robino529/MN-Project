@@ -41,7 +41,7 @@ public abstract class Runner {
     }
 
     public StateSpace getStateSpace(){
-        return this.animator.getStateSpace() ;
+        return this.animator.getStateSpace();
     }
 
     /*
