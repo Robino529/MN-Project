@@ -42,11 +42,21 @@ public class SimpleRunner extends Runner{
 //        this.showTransition(state.getOutTransitions().get(2));
 
         // e-greedy
-        execN(100, "e-greedy");
+        // execN(100, "e-greedy");
+        execAuto("e-greedy");
         // UCB
         // execN(100, "ucb");
         // Bandit
         // execN(100, "bandit");
+    }
+
+    public void execAuto(String typeAlgo) {
+        Env env = new Env("e-greedy", state);
+
+        env.start(animator);
+
+        System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent ###########");
+        env.printAgent();
     }
 
     public void execN(int n, String typeAlgo) {

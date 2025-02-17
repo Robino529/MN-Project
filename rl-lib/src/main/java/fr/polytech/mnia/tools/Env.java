@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Env {
 	Agent agent;
 	State currentState;
+	int maxIterations = 10000;
 
 	public Env(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
@@ -24,6 +25,23 @@ public class Env {
 		} else {
 			throw new IllegalArgumentException("initialState is null");
 		}
+	}
+
+	public Env(String typeAlgo, State initialState, int maxIterations) {
+		this(typeAlgo, initialState);
+		this.maxIterations = maxIterations;
+	}
+
+	public void start(MyProb animator) {
+		for (int i = 0; i < maxIterations; i++) {
+			try {
+				execAction();
+				// animator.printState(currentState);
+			} catch (convergenceAtteinte e) {
+				break;
+			}
+		}
+
 	}
 
 	public State execAction() {
