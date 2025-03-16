@@ -5,11 +5,13 @@ import de.prob.statespace.Transition;
 import fr.polytech.mnia.MyProb;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Env {
 	Agent agent;
 	State currentState;
-	int maxIterations = 10000;
+	int iteration = 1;
+	int maxIterations = 100;
 
 	public Env(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
@@ -33,7 +35,7 @@ public class Env {
 	}
 
 	public void start(MyProb animator) {
-		for (int i = 0; i < maxIterations; i++) {
+		for (iteration = 1; iteration <= maxIterations; iteration++) {
 			try {
 				execAction();
 				// animator.printState(currentState);
@@ -42,10 +44,11 @@ public class Env {
 			}
 		}
 
+		//System.out.println("Itérations réalisées = "+(iteration-1));
 	}
 
 	public State execAction() {
-		Transition transToApply = agent.choose(currentState.getOutTransitions());
+		Transition transToApply = agent.choose(getActions());
 		currentState = currentState.perform(transToApply.getName(), transToApply.getParameterPredicate()).explore();
 		double reward = getReward(currentState.eval("res").toString().equalsIgnoreCase("OK"));
 
@@ -64,6 +67,10 @@ public class Env {
 		} else {
 			return 0.0;
 		}
+	}
+
+	public List<Transition> getActions() {
+		return this.currentState.getOutTransitions();
 	}
 
 	public void printAgent() {

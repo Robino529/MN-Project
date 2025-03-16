@@ -46,12 +46,13 @@ public class SimpleRunner extends Runner{
         execAuto("e-greedy");
         // UCB
         // execN(100, "ucb");
+        execAuto("ucb");
         // Bandit
         // execN(100, "bandit");
     }
 
     public void execAuto(String typeAlgo) {
-        Env env = new Env("e-greedy", state);
+        Env env = new Env(typeAlgo, state);
 
         env.start(animator);
 
@@ -60,7 +61,7 @@ public class SimpleRunner extends Runner{
     }
 
     public void execN(int n, String typeAlgo) {
-        Env env = new Env("e-greedy", state);
+        Env env = new Env(typeAlgo, state);
 
         for (int i = 0; i < n; i++) {
             state = env.execAction();

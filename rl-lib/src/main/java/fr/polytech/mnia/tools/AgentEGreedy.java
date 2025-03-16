@@ -6,23 +6,19 @@ import fr.polytech.mnia.MyProb;
 import java.util.*;
 
 public class AgentEGreedy extends Agent {
-	final double defaultValue = 0.0;
 	double tauxApprentissage;
 	double facteurDiscount;
 	double facteurExploratoire;
-	double limiteConvergence;
 
 	public AgentEGreedy(Env env) {
 		super(env);
 		this.tauxApprentissage = 0.2;
 		this.facteurDiscount = 0.9;
 		this.facteurExploratoire = 0.2;
-		this.limiteConvergence = 0.00001;
 	}
 
 	public AgentEGreedy(Env env, double limiteConvergence) {
-		this(env);
-		this.limiteConvergence = limiteConvergence;
+		super(env, limiteConvergence);
 	}
 
 	public AgentEGreedy(Env env, double tauxApprentissage, double facteurDiscount, double facteurExploratoire) {
@@ -83,6 +79,7 @@ public class AgentEGreedy extends Agent {
 		table.put(
 				destination,
 				table.get(destination) + tauxApprentissage * (reward + facteurDiscount * env.getReward(future) - table.get(destination)));
+
 		if (Math.abs(table.get(destination) - lastValue) < limiteConvergence && table.get(destination) != lastValue) {
 			throw new convergenceAtteinte("Convergence atteinte :b");
 		}
