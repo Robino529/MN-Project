@@ -21,21 +21,22 @@ public class AgentBandit extends Agent {
 		lastProbabilites = new HashMap<>();
 		double[] probabilities = new double[actions.size()];
 		int indexChoose = 0;
+		String actionName;
 
 		if (env.iteration == 1) {
 			for (Transition action : actions) {
-				String target = action.getDestination().getId();
+				actionName = action.getParameterValues().get(0);
 
-				table.put(target, defaultValue);
+				table.put(actionName, defaultValue);
 			}
 		}
 
 		double sumB = sommeExp(actions);
 
 		for (int i = 0; i < actions.size(); i++) {
-			String target = actions.get(i).getDestination().getId();
+			actionName = actions.get(i).getParameterValues().get(0);
 
-			probabilities[i] = Math.exp(table.get(target)) / sumB;
+			probabilities[i] = Math.exp(table.get(actionName)) / sumB;
 			lastProbabilites.put(actions.get(i), probabilities[i]);
 		}
 
@@ -56,8 +57,8 @@ public class AgentBandit extends Agent {
 	private double sommeExp(List<Transition> actions) {
 		double result = 0;
 
-		for (int i = 0; i < actions.size(); i++) {
-			result += Math.exp(table.get(actions.get(i).getDestination().getId()));
+		for (Transition action : actions) {
+			result += Math.exp(table.get(action.getParameterValues().get(0)));
 		}
 
 		return result;
@@ -67,14 +68,15 @@ public class AgentBandit extends Agent {
 	public void reward(double reward, Transition transition) {
 		baselineReward = baselineReward + (1/(double) env.iteration) * (reward - baselineReward);
 
-		String choose = transition.getDestination().getId();
+		String choose = transition.getParameterValues().get(0);
 		// selected action
 		table.put(choose, table.get(choose) + tauxApprentissage*(reward - baselineReward)*(1 - lastProbabilites.get(transition)));
 
 		// non-selected actions
 		for(Transition action : lastProbabilites.keySet()) {
 			if (action != transition) {
-				table.put(action.getDestination().getId(), table.get(action.getDestination().getId()) - tauxApprentissage*(reward - baselineReward)*lastProbabilites.get(action));
+				String actionName = action.getParameterValues().get(0);
+				table.put(actionName, table.get(actionName) - tauxApprentissage*(reward - baselineReward)*lastProbabilites.get(action));
 			}
 		}
 	}

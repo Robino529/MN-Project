@@ -33,19 +33,19 @@ public class AgentUCB extends Agent {
 		int transition = 0;
 
 		for (int i = 0; i < actions.size(); i++) {
-			String target = actions.get(i).getDestination().getId();
+			String actionName = actions.get(i).getParameterValues().get(0);
 
-			if (!table.containsKey(target)) {
-				table.put(target, defaultValue);
+			if (!table.containsKey(actionName)) {
+				table.put(actionName, defaultValue);
 			}
 
-			if (!tableOccurences.containsKey(target)) {
-				tableOccurences.put(target, 1);
+			if (!tableOccurences.containsKey(actionName)) {
+				tableOccurences.put(actionName, 1);
 				return actions.get(i);
 			}
 
 			// calcul valeur d'une action
-			double value = table.get(target) + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(target));
+			double value = table.get(actionName) + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(actionName));
 			// probabilité plus importante => nouveau choix
 			if (value > maxValue) {
 				maxValue = value;
@@ -53,14 +53,14 @@ public class AgentUCB extends Agent {
 			}
 		}
 
-		tableOccurences.put(actions.get(transition).getDestination().getId(), tableOccurences.get(actions.get(transition).getDestination().getId()) + 1);
+		tableOccurences.put(actions.get(transition).getParameterValues().get(0), tableOccurences.get(actions.get(transition).getParameterValues().get(0)) + 1);
 		return actions.get(transition);
 	}
 
 	@Override
 	public void reward(double reward, Transition transition) {
-		String destination = transition.getDestination().getId();
-		double lastValue = table.get(destination);
+		String actionName = transition.getParameterValues().get(0);
+		double lastValue = table.get(actionName);
 
 //		table.put(
 //				destination,
@@ -68,8 +68,8 @@ public class AgentUCB extends Agent {
 //		);
 
 		table.put(
-				destination,
-				lastValue + reward / tableOccurences.get(destination)
+				actionName,
+				lastValue + reward / tableOccurences.get(actionName)
 		);
 	}
 }

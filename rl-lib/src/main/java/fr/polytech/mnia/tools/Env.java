@@ -4,7 +4,6 @@ import de.prob.statespace.State;
 import de.prob.statespace.Transition;
 import fr.polytech.mnia.MyProb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Env {
@@ -49,8 +48,8 @@ public class Env {
 
 	public State execAction() {
 		Transition transToApply = agent.choose(getActions());
+		double reward = getReward(transToApply);
 		currentState = currentState.perform(transToApply.getName(), transToApply.getParameterPredicate()).explore();
-		double reward = getReward(currentState.eval("res").toString().equalsIgnoreCase("OK"));
 
 		agent.reward(reward, transToApply);
 		return currentState;

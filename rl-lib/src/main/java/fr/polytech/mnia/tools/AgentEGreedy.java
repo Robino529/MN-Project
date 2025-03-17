@@ -52,12 +52,14 @@ public class AgentEGreedy extends Agent {
 		Transition choice = null;
 
 		for (Transition action : actions) {
-			if (!table.containsKey(action.getDestination().getId())) {
-				table.put(action.getDestination().getId(), defaultValue);
+			String actionName = action.getParameterValues().get(0);
+
+			if (!table.containsKey(actionName)) {
+				table.put(actionName, defaultValue);
 			}
 
-			if (table.get(action.getDestination().getId()) > lastVal) {
-				lastVal = table.get(action.getDestination().getId());
+			if (table.get(actionName) > lastVal) {
+				lastVal = table.get(actionName);
 				choice = action;
 			}
 
@@ -72,15 +74,15 @@ public class AgentEGreedy extends Agent {
 
 	@Override
 	public void reward(double reward, Transition transition) {
-		String destination = transition.getDestination().getId();
+		String actionName = transition.getParameterValues().get(0);
 		Transition future = notRandChoice(transition.getDestination().getOutTransitions());
 
-		double lastValue = table.get(destination);
+		double lastValue = table.get(actionName);
 		table.put(
-				destination,
-				table.get(destination) + tauxApprentissage * (reward + facteurDiscount * env.getReward(future) - table.get(destination)));
+				actionName,
+				table.get(actionName) + tauxApprentissage * (reward + facteurDiscount * env.getReward(future) - table.get(actionName)));
 
-		if (Math.abs(table.get(destination) - lastValue) < limiteConvergence && table.get(destination) != lastValue) {
+		if (Math.abs(table.get(actionName) - lastValue) < limiteConvergence && table.get(actionName) != lastValue) {
 			throw new convergenceAtteinte("Convergence atteinte :b");
 		}
 	}
