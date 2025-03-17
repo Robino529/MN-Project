@@ -49,6 +49,7 @@ public class SimpleRunner extends Runner{
         execAuto("ucb");
         // Bandit
         // execN(100, "bandit");
+        execAuto("bandit");
     }
 
     public void execAuto(String typeAlgo) {

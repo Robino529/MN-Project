@@ -42,8 +42,6 @@ public class AgentUCB extends Agent {
 			if (!tableOccurences.containsKey(target)) {
 				tableOccurences.put(target, 1);
 				return actions.get(i);
-			} else {
-				tableOccurences.put(target, tableOccurences.get(target) + 1);
 			}
 
 			// calcul valeur d'une action
@@ -54,6 +52,8 @@ public class AgentUCB extends Agent {
 				transition = i;
 			}
 		}
+
+		tableOccurences.put(actions.get(transition).getDestination().getId(), tableOccurences.get(actions.get(transition).getDestination().getId()) + 1);
 		return actions.get(transition);
 	}
 
@@ -62,10 +62,14 @@ public class AgentUCB extends Agent {
 		String destination = transition.getDestination().getId();
 		double lastValue = table.get(destination);
 
-		// TODO : env.iteration =>
+//		table.put(
+//				destination,
+//				lastValue + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(destination))
+//		);
+
 		table.put(
 				destination,
-				lastValue + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(destination))
+				lastValue + reward / tableOccurences.get(destination)
 		);
 	}
 }
