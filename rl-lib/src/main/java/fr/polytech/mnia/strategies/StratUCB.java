@@ -1,29 +1,26 @@
-package fr.polytech.mnia.tools;
+package fr.polytech.mnia.strategies;
 
 import de.prob.statespace.Transition;
+import fr.polytech.mnia.envs.EnvSimple;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AgentUCB extends Agent {
-	double facteurExploratoire;
-	Map<String, Integer> tableOccurences;
+public class StratUCB extends StratEGreedy {
+	protected Map<String, Integer> tableOccurences = new HashMap<>();
 
-	public AgentUCB(Env env) {
+	public StratUCB(EnvSimple env) {
 		super(env);
-		tableOccurences = new HashMap<>();
-		facteurExploratoire = 0.2;
 	}
 
-	public AgentUCB(Env env, double limiteConvergence) {
+	public StratUCB(EnvSimple env, double facteurExploratoire) {
+		super(env);
+		this.facteurExploratoire = facteurExploratoire;
+	}
+
+	public StratUCB(EnvSimple env, double facteurExploratoire, double limiteConvergence) {
 		super(env, limiteConvergence);
-		tableOccurences = new HashMap<>();
-		facteurExploratoire = 0.2;
-	}
-
-	public AgentUCB(Env env, double limiteConvergence, double facteurExploratoire) {
-		this(env, limiteConvergence);
 		this.facteurExploratoire = facteurExploratoire;
 	}
 
@@ -36,7 +33,7 @@ public class AgentUCB extends Agent {
 			String actionName = actions.get(i).getParameterValues().get(0);
 
 			if (!table.containsKey(actionName)) {
-				table.put(actionName, defaultValue);
+				table.put(actionName, defaultTableValue);
 			}
 
 			if (!tableOccurences.containsKey(actionName)) {
@@ -45,7 +42,7 @@ public class AgentUCB extends Agent {
 			}
 
 			// calcul valeur d'une action
-			double value = table.get(actionName) + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(actionName));
+			double value = table.get(actionName) + facteurExploratoire * Math.sqrt(Math.log(env.getIteration()) / tableOccurences.get(actionName));
 			// probabilité plus importante => nouveau choix
 			if (value > maxValue) {
 				maxValue = value;
@@ -62,14 +59,21 @@ public class AgentUCB extends Agent {
 		String actionName = transition.getParameterValues().get(0);
 		double lastValue = table.get(actionName);
 
+//      Technique à la main, pas incroyable
 //		table.put(
-//				destination,
-//				lastValue + facteurExploratoire * Math.sqrt(Math.log(env.iteration) / tableOccurences.get(destination))
+//				actionName,
+//				lastValue + reward / tableOccurences.get(actionName)
 //		);
+
+//      Réutilisation de EGreedy
+		Transition future = choose(transition.getDestination().getOutTransitions());
 
 		table.put(
 				actionName,
-				lastValue + reward / tableOccurences.get(actionName)
-		);
+				table.get(actionName) + tauxApprentissage * (reward + facteurDiscount * env.getReward(future) - table.get(actionName)));
+
+		if (Math.abs(table.get(actionName) - lastValue) < limiteConvergence && table.get(actionName) != lastValue) {
+			convergenceAtteinte = true;
+		}
 	}
 }

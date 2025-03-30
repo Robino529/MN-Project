@@ -1,6 +1,6 @@
 package fr.polytech.mnia;
 
-import fr.polytech.mnia.tools.Env;
+import fr.polytech.mnia.envs.EnvSimple;
 
 /*
  * Cette classe illustre l'exécution de SimpleRL.mch
@@ -21,26 +21,6 @@ public class SimpleRunner extends Runner{
      * déclenchables dans cet état.
      */
     public void execSequence() throws Exception {
-//        // Here we start the animation
-//        this.state = state.perform("choose", "film = A").explore() ;
-//        animator.printState(state) ;
-//        animator.printActions(state.getOutTransitions()) ;
-//
-//        state = state.perform("choose", "film = B").explore() ;
-//        animator.printState(state) ;
-//        animator.printActions(state.getOutTransitions()) ;
-//
-//        state = state.perform("choose", "film = C").explore() ;
-//        animator.printState(state) ;
-//        animator.printActions(state.getOutTransitions()) ;
-//
-//        state = state.perform("choose", "film = A").explore() ;
-//        animator.printState(state) ;
-//        animator.printActions(state.getOutTransitions()) ;
-//
-//        // ici on explore la transition à l'indice 2
-//        this.showTransition(state.getOutTransitions().get(2));
-
         // e-greedy
         // execN(100, "e-greedy");
         execAuto("e-greedy");
@@ -53,16 +33,16 @@ public class SimpleRunner extends Runner{
     }
 
     public void execAuto(String typeAlgo) {
-        Env env = new Env(typeAlgo, state);
+        EnvSimple env = new EnvSimple(typeAlgo, state);
 
         env.start(animator);
 
-        System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent ###########");
+        System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.getIteration()-1)+" iterations) ###########");
         env.printAgent();
     }
 
     public void execN(int n, String typeAlgo) {
-        Env env = new Env(typeAlgo, state);
+        EnvSimple env = new EnvSimple(typeAlgo, state);
 
         for (int i = 0; i < n; i++) {
             state = env.execAction();

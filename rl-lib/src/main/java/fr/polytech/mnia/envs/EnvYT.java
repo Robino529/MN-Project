@@ -1,11 +1,11 @@
-package fr.polytech.mnia.tools;
+package fr.polytech.mnia.envs;
 
 import de.prob.statespace.State;
 import de.prob.statespace.Transition;
 
 import java.util.List;
 
-public class EnvYT extends Env {
+public class EnvYT extends EnvSimple {
 	public EnvYT(String typeAlgo, State initialState) {
 		super(typeAlgo, initialState);
 		maxIterations = 1000;

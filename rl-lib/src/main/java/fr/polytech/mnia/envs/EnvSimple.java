@@ -1,24 +1,29 @@
-package fr.polytech.mnia.tools;
+package fr.polytech.mnia.envs;
 
 import de.prob.statespace.State;
 import de.prob.statespace.Transition;
 import fr.polytech.mnia.MyProb;
+import fr.polytech.mnia.strategies.StratBanditGradient;
+import fr.polytech.mnia.strategies.StratEGreedy;
+import fr.polytech.mnia.strategies.StratUCB;
+import fr.polytech.mnia.agents.Agent;
+import fr.polytech.mnia.utils.convergenceAtteinte;
 
 import java.util.List;
 
-public class Env {
-	Agent agent;
-	State currentState;
-	int iteration = 1;
-	int maxIterations = 100;
+public class EnvSimple {
+	protected Agent agent;
+	protected State currentState;
+	protected int iteration = 1;
+	protected int maxIterations = 100;
 
-	public Env(String typeAlgo, State initialState) {
+	public EnvSimple(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
-			agent = new AgentEGreedy(this);
+			agent = new Agent(this, new StratEGreedy(this));
 		} else if (typeAlgo.equals("ucb")) {
-			agent = new AgentUCB(this);
+			agent = new Agent(this, new StratUCB(this));
 		} else {
-			agent = new AgentBandit(this);
+			agent = new Agent(this, new StratBanditGradient(this));
 		}
 
 		if (initialState != null) {
@@ -28,7 +33,7 @@ public class Env {
 		}
 	}
 
-	public Env(String typeAlgo, State initialState, int maxIterations) {
+	public EnvSimple(String typeAlgo, State initialState, int maxIterations) {
 		this(typeAlgo, initialState);
 		this.maxIterations = maxIterations;
 	}
@@ -66,6 +71,10 @@ public class Env {
 		} else {
 			return 0.0;
 		}
+	}
+
+	public int getIteration() {
+		return iteration;
 	}
 
 	public List<Transition> getActions() {
