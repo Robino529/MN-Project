@@ -25,7 +25,7 @@ public class YTRunner extends Runner {
 	}
 
 	public void execAuto(String typeAlgo) {
-		EnvYT env = new EnvYT(typeAlgo, state);
+		EnvYT env = new EnvYT(typeAlgo, state, 10000);
 
 		env.start(animator);
 

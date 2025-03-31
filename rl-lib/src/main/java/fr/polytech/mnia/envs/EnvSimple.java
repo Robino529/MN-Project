@@ -19,11 +19,11 @@ public class EnvSimple {
 
 	public EnvSimple(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
-			agent = new Agent(this, new StratEGreedy(this));
+			agent = new Agent(this, new StratEGreedy(this, 0.01));
 		} else if (typeAlgo.equals("ucb")) {
-			agent = new Agent(this, new StratUCB(this));
+			agent = new Agent(this, new StratUCB(this, 0.01));
 		} else {
-			agent = new Agent(this, new StratBanditGradient(this));
+			agent = new Agent(this, new StratBanditGradient(this, 0.01));
 		}
 
 		if (initialState != null) {

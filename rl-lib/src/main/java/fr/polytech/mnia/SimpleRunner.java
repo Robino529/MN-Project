@@ -33,7 +33,7 @@ public class SimpleRunner extends Runner{
     }
 
     public void execAuto(String typeAlgo) {
-        EnvSimple env = new EnvSimple(typeAlgo, state);
+        EnvSimple env = new EnvSimple(typeAlgo, state, 10000);
 
         env.start(animator);
 
