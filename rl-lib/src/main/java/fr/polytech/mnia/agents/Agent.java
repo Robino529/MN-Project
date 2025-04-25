@@ -1,6 +1,7 @@
 package fr.polytech.mnia.agents;
 
 import de.prob.statespace.Transition;
+import fr.polytech.mnia.envs.Env;
 import fr.polytech.mnia.envs.EnvSimple;
 import fr.polytech.mnia.strategies.Strategy;
 import fr.polytech.mnia.utils.convergenceAtteinte;
@@ -8,10 +9,10 @@ import fr.polytech.mnia.utils.convergenceAtteinte;
 import java.util.List;
 
 public class Agent {
-	private EnvSimple env;
+	private Env env;
 	private Strategy strategy;
 
-	public Agent(EnvSimple env, Strategy strategy) {
+	public Agent(Env env, Strategy strategy) {
 		this.env = env;
 		this.strategy = strategy;
 	}

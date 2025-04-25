@@ -11,7 +11,9 @@ import fr.polytech.mnia.utils.convergenceAtteinte;
 
 import java.util.List;
 
-public class EnvSimple {
+// TODO : Refaire l'architecture environnement / agent
+
+public class EnvSimple implements Env {
 	protected Agent agent;
 	protected State currentState;
 	protected int iteration = 1;
@@ -19,11 +21,11 @@ public class EnvSimple {
 
 	public EnvSimple(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
-			agent = new Agent(this, new StratEGreedy(this, 0.01));
+			agent = new Agent(this, new StratEGreedy(this, 0.001));
 		} else if (typeAlgo.equals("ucb")) {
-			agent = new Agent(this, new StratUCB(this, 0.01));
+			agent = new Agent(this, new StratUCB(this, 0.001));
 		} else {
-			agent = new Agent(this, new StratBanditGradient(this, 0.01));
+			agent = new Agent(this, new StratBanditGradient(this, 0.001));
 		}
 
 		if (initialState != null) {
@@ -38,6 +40,7 @@ public class EnvSimple {
 		this.maxIterations = maxIterations;
 	}
 
+	@Override
 	public void start(MyProb animator) {
 		for (iteration = 1; iteration <= maxIterations; iteration++) {
 			try {
@@ -51,6 +54,7 @@ public class EnvSimple {
 		// System.out.println("Itérations réalisées = "+(iteration-1));
 	}
 
+	@Override
 	public State execAction() {
 		Transition transToApply = agent.choose(getActions());
 		double reward = getReward(transToApply);
@@ -60,6 +64,7 @@ public class EnvSimple {
 		return currentState;
 	}
 
+	@Override
 	public double getReward(Transition transition) {
 		State futureState = currentState.perform(transition.getName(), transition.getParameterPredicate()).explore();
 		return getReward(futureState.eval("res").toString().equalsIgnoreCase("OK"));
@@ -73,15 +78,23 @@ public class EnvSimple {
 		}
 	}
 
+	@Override
 	public int getIteration() {
 		return iteration;
 	}
 
+	@Override
 	public List<Transition> getActions() {
 		return this.currentState.getOutTransitions();
 	}
 
+	@Override
 	public void printAgent() {
 		System.out.println(agent);
+	}
+
+	@Override
+	public State getCurrentState() {
+		return currentState;
 	}
 }
