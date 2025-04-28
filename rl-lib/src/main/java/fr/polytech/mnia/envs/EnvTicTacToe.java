@@ -36,13 +36,8 @@ public class EnvTicTacToe implements Env {
 	}
 
 	@Override
-	public void start(MyProb animator) {
-
-	}
-
-	@Override
-	public State execAction() {
-		return null;
+	public void execAction(Transition transToApply) {
+		currentState = currentState.perform(transToApply.getName(), transToApply.getParameterPredicate()).explore();
 	}
 
 	@Override
@@ -61,11 +56,6 @@ public class EnvTicTacToe implements Env {
 		} else {
 			return -0.05;
 		}
-	}
-
-	@Override
-	public int getIteration() {
-		return 0;
 	}
 
 	@Override

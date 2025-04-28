@@ -7,17 +7,13 @@ import fr.polytech.mnia.strategies.StratBanditGradient;
 import fr.polytech.mnia.strategies.StratEGreedy;
 import fr.polytech.mnia.strategies.StratUCB;
 import fr.polytech.mnia.agents.Agent;
-import fr.polytech.mnia.utils.convergenceAtteinte;
+import fr.polytech.mnia.utils.ConvergenceAtteinte;
 
 import java.util.List;
 
-// TODO : Refaire l'architecture environnement / agent
-
 public class EnvSimple implements Env {
-	protected Agent agent;
+	public Agent agent;
 	protected State currentState;
-	protected int iteration = 1;
-	protected int maxIterations = 100;
 
 	public EnvSimple(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
@@ -36,32 +32,24 @@ public class EnvSimple implements Env {
 	}
 
 	public EnvSimple(String typeAlgo, State initialState, int maxIterations) {
-		this(typeAlgo, initialState);
-		this.maxIterations = maxIterations;
-	}
-
-	@Override
-	public void start(MyProb animator) {
-		for (iteration = 1; iteration <= maxIterations; iteration++) {
-			try {
-				execAction();
-				// animator.printState(currentState);
-			} catch (convergenceAtteinte e) {
-				break;
-			}
+		if (typeAlgo.equals("e-greedy")) {
+			agent = new Agent(this, new StratEGreedy(this, 0.001), maxIterations);
+		} else if (typeAlgo.equals("ucb")) {
+			agent = new Agent(this, new StratUCB(this, 0.001), maxIterations);
+		} else {
+			agent = new Agent(this, new StratBanditGradient(this, 0.001), maxIterations);
 		}
 
-		// System.out.println("Itérations réalisées = "+(iteration-1));
+		if (initialState != null) {
+			currentState = initialState;
+		} else {
+			throw new IllegalArgumentException("initialState is null");
+		}
 	}
 
 	@Override
-	public State execAction() {
-		Transition transToApply = agent.choose(getActions());
-		double reward = getReward(transToApply);
+	public void execAction(Transition transToApply) {
 		currentState = currentState.perform(transToApply.getName(), transToApply.getParameterPredicate()).explore();
-
-		agent.reward(reward, transToApply);
-		return currentState;
 	}
 
 	@Override
@@ -76,11 +64,6 @@ public class EnvSimple implements Env {
 		} else {
 			return 0.0;
 		}
-	}
-
-	@Override
-	public int getIteration() {
-		return iteration;
 	}
 
 	@Override

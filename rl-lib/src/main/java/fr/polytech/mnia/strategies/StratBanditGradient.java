@@ -40,7 +40,7 @@ public class StratBanditGradient extends StratBandit {
 		int indexChoose = 0;
 		String actionName;
 
-		if (env.getIteration() == 1) {
+		if (env.agent.getIteration() == 1) {
 			for (Transition action : actions) {
 				actionName = action.getParameterValues().get(0);
 
@@ -83,7 +83,7 @@ public class StratBanditGradient extends StratBandit {
 
 	@Override
 	public void reward(double reward, Transition transition) {
-		baselineReward = baselineReward + (1/(double) env.getIteration()) * (reward - baselineReward);
+		baselineReward = baselineReward + (1/(double) env.agent.getIteration()) * (reward - baselineReward);
 		boolean convergence = true;
 		double lastValue;
 

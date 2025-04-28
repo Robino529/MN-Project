@@ -8,12 +8,10 @@ import java.util.List;
 public class EnvYT extends EnvSimple {
 	public EnvYT(String typeAlgo, State initialState) {
 		super(typeAlgo, initialState);
-		maxIterations = 1000;
 	}
 
 	public EnvYT(String typeAlgo, State initialState, int maxIterations) {
 		super(typeAlgo, initialState, maxIterations);
-		maxIterations = 1000;
 	}
 
 	@Override

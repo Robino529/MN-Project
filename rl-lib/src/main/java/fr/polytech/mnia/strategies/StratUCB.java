@@ -40,14 +40,14 @@ public class StratUCB extends StratEGreedy {
 				tableOccurences.put(actionName, 0);
 			}
 			// vérifie que l'on est pas dans une exploration du futur + pas encore exploré
-			if (iteration != env.getIteration() && tableOccurences.get(actionName) == 0) {
+			if (iteration != env.agent.getIteration() && tableOccurences.get(actionName) == 0) {
 				tableOccurences.put(actionName, 1);
 				transition = i;
 				break;
 			}
 
 			// calcul valeur d'une action
-			double value = table.get(actionName) + facteurExploratoire * Math.sqrt(Math.log(env.getIteration()) / tableOccurences.get(actionName));
+			double value = table.get(actionName) + facteurExploratoire * Math.sqrt(Math.log(env.agent.getIteration()) / tableOccurences.get(actionName));
 			// probabilité plus importante => nouveau choix
 			if (value > maxValue) {
 				maxValue = value;
@@ -56,9 +56,9 @@ public class StratUCB extends StratEGreedy {
 		}
 
 		// on vérifie que l'on est pas dans un appel futur
-		if (iteration != env.getIteration()) {
+		if (iteration != env.agent.getIteration()) {
 			tableOccurences.put(actions.get(transition).getParameterValues().get(0), tableOccurences.get(actions.get(transition).getParameterValues().get(0)) + 1);
-			iteration = env.getIteration();
+			iteration = env.agent.getIteration();
 		}
 		return actions.get(transition);
 	}
