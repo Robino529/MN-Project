@@ -79,6 +79,7 @@ Pour construire un objet `Env`, il vous faut également un état initial qui né
 Une fois tous les objets construits, l'apprentissage de l'agent se fait en appelant sa méthode `learn`, si vous ne possédez que l'environnement, vous pouvez utiliser la succession de méthodes suivante : `env.getAgent().learn()`.
 
 Vous pouvez ensuite imprimer les résultats de l'apprentissage en utilisant :
+
 - `env.printAgent()`
 - `System.out.println(env.getAgent())` ou `System.out.println(agent)`
 
@@ -95,6 +96,7 @@ Tous les environnements non abstraits de la bibliothèques sont utilisables dire
 Si vous souhaitez, utiliser votre propre environnement, étendez la classe abstraite `Env` et implémentez ou surchargez ce dont vous avez besoin. Si vous étendez `Env`, il faut obligatoirement implémenter la fonction de récompense `getReward(Transition)`. Il est également conseillé mais pas obligatoire d'implémenter un constructeur plus avancé que celui de `Env`, car l'agent n'est pas défini (il est égal à null) par défaut au moment de la création d'un objet `Env`.
 
 Voir le [code (Env.java)](../../java/fr/polytech/mnia/envs/Env.java) pour la description des méthodes, en voici cependant la liste :
+
 - `(constructor)` Env(State initialState)
 - void setAgent(Agent agent)
 - void execAction(Transition transToApply)
@@ -113,6 +115,7 @@ Voir le [code (Env.java)](../../java/fr/polytech/mnia/envs/Env.java) pour la des
 L'agent de la bibliothèque est utilisable directement en le construisant à partir d'un environnement (`Env`) et d'une stratégie (`Strategy`). Vous pouvez étendre cet agent si vous souhaitez le surcharger ou lui ajouter des fonctionnalités.
 
 Voir le [code (Agent.java)](../../java/fr/polytech/mnia/agents/Agent.java) pour la description des différentes méthodes, voici cependant leur liste :
+
 - `(constructor)` Agent(Env env, Strategy strategy)
 - `(constructor)` Agent(Env env, Strategy strategy, int maxIterations)
 - void learn()
@@ -126,6 +129,7 @@ Toutes les stratégies non abstraites de la bibliothèques sont utilisables dire
 Les stratégies abstraites `StratBandit` et `StratMDP` sont communes à plusieurs stratégies de la bibliothèque et vous pouvez également les étendre pour utiliser les fonctionnalités et variables qu'elles intègrent déjà afin de plus rapidement constituer des stratégies fonctionnelles.
 
 Enfin, vous pouvez construire votre propre stratégie depuis presque zéro en implémentant l'interface `Strategy` dont voici la liste des fonctions (pour plus de précision et une petite description, allez voir le [code (Strategy.java)](../../java/fr/polytech/mnia/strategies/Strategy.java)) :
+
 - void learn()
 - Transition choose(List<Transition> actions)
 - boolean convergenceAtteinte()
