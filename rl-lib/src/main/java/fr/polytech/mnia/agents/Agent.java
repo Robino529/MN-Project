@@ -35,7 +35,7 @@ public class Agent {
 
 	/** Fonction qui retourne l'action choisie par la politique de la stratégie
 	 */
-	protected Transition choose(List<Transition> actions) {
+	public Transition choose(List<Transition> actions) {
 		return strategy.choose(actions);
 	}
 
