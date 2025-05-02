@@ -4,10 +4,16 @@ import de.prob.statespace.State;
 import de.prob.statespace.Transition;
 import fr.polytech.mnia.envs.Env;
 
-import java.util.List;
-
 // Pour politique déterministe uniquement
 public class StratIterPolicyWithImprovement extends StratIterPolicy {
+	public StratIterPolicyWithImprovement(Env env) {
+		super(env);
+	}
+
+	public StratIterPolicyWithImprovement(Env env, double seuilConvergence) {
+		super(env, seuilConvergence);
+	}
+
 	public StratIterPolicyWithImprovement(Env env, double discount, double seuilConvergence) {
 		super(env, discount, seuilConvergence);
 	}

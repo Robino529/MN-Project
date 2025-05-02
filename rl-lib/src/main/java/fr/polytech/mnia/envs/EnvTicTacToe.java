@@ -71,13 +71,13 @@ public class EnvTicTacToe extends Env {
 	 */
 	public double getReward(State state) {
 		if (state.eval("win(0)").toString().equalsIgnoreCase("TRUE")) {
-			return 5.0;
+			return 1.0;
 		} else if (state.eval("win(1)").toString().equalsIgnoreCase("TRUE")) {
-			return -5.0;
+			return -1.0;
 		} else if (state.getOutTransitions().isEmpty()) {
 			return 0.0;
 		} else {
-			return -0.05;
+			return -0.25;
 		}
 	}
 }

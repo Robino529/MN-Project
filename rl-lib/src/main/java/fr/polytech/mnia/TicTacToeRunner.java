@@ -1,5 +1,8 @@
 package fr.polytech.mnia;
 
+import fr.polytech.mnia.envs.Env;
+import fr.polytech.mnia.envs.EnvTicTacToe;
+
 public class TicTacToeRunner extends Runner{
     /*
      * Le constructeur lance ProB sur la machine tictac.mch
@@ -17,6 +20,12 @@ public class TicTacToeRunner extends Runner{
      * et l'affiche de manière plus jolie et compréhensible
      */
     public void execSequence() throws Exception {
+//        TODO : Implémenter l'utilisation des tests
+//        Env envUsed = createEnv("iterValue");
+//        Env envUsed = createEnv("iterPolicy");
+//        Env envUsed = createEnv("iterPolicyWithImprovement");
+//        envUsed.getAgent().learn();
+
         String win1, win0 ;
         win1 = state.eval("win(1)").toString() ;
         win0 = state.eval("win(0)").toString() ;
@@ -59,5 +68,18 @@ public class TicTacToeRunner extends Runner{
             System.out.println(" " + board[i][0] + " | " + board[i][1] + " | " + board[i][2]);
             if (i < 2) System.out.println("---+---+---");
         }
+    }
+
+    /**
+     * Crée un environnement avec le type d'algo donné et le retourne
+     * @param typeAlgo type de stratégie à utiliser par l'agent de l'environnement (l'agent est modifiable après création de l'environnement) :
+     *                 - "iterValue" => choix de la stratégie epsilon greedy
+     *                 - "iterPolicyImprovement" => choix de la stratégie Iterative Policy Evaluation avec amélioration (nécessite une politique déterministe)
+     *                 - "iterPolicy" => choix de la stratégie Iterative Policy Evaluation (sans amélioration, et avec une politique uniforme ou e-greedy)
+     *                 - une autre chaîne => IllegalArgumentException
+     * @return Environnement créé
+     */
+    private Env createEnv(String typeAlgo) {
+        return new EnvTicTacToe(typeAlgo, state, 1000);
     }
 }
