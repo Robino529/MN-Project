@@ -1,5 +1,6 @@
 package fr.polytech.mnia;
 
+import fr.polytech.mnia.envs.Env;
 import fr.polytech.mnia.envs.EnvSimple;
 
 /*
@@ -33,11 +34,11 @@ public class SimpleRunner extends Runner{
     }
 
     public void execAuto(String typeAlgo) {
-        EnvSimple env = new EnvSimple(typeAlgo, state, 10000);
+        Env env = new EnvSimple(typeAlgo, state, 10000);
 
-        env.agent.learn();
+        env.getAgent().learn();
 
-        System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.agent.getIteration()-1)+" iterations) ###########");
+        System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.getAgent().iteration-1)+" iterations) ###########");
         env.printAgent();
     }
 }

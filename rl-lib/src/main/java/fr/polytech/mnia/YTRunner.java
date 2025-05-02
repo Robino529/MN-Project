@@ -27,9 +27,9 @@ public class YTRunner extends Runner {
 	public void execAuto(String typeAlgo) {
 		EnvYT env = new EnvYT(typeAlgo, state, 10000);
 
-		env.agent.learn();
+		env.getAgent().learn();
 
-		System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.agent.getIteration()-1)+" iterations) ###########");
+		System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.getAgent().iteration-1)+" iterations) ###########");
 		env.printAgent();
 	}
 }
