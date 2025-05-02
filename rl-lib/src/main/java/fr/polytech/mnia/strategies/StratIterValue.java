@@ -18,6 +18,7 @@ public class StratIterValue extends StratMDP {
 	protected EnvTicTacToe env;
 
 	public StratIterValue(EnvTicTacToe env) {
+		super(env);
 		this.env = env;
 		tableStateValue = new HashMap<>();
 		terminalStates = new ArrayList<>();
@@ -56,7 +57,7 @@ public class StratIterValue extends StratMDP {
 		return null;
 	}
 
-	public HashMap<State, Double> learn() {
+	public void learn() {
 		double delta = 0.0;
 		do {
 			double lastVal;
@@ -68,8 +69,6 @@ public class StratIterValue extends StratMDP {
 				delta = Math.max(delta, Math.abs(lastVal - tableStateValue.get(s)));
 			}
 		} while (delta < seuil);
-
-		return (HashMap<State, Double>) tableStateValue.clone();
 	}
 
 	public double value(State state) {

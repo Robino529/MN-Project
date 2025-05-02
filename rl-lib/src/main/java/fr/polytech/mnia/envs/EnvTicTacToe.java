@@ -2,42 +2,31 @@ package fr.polytech.mnia.envs;
 
 import de.prob.statespace.State;
 import de.prob.statespace.Transition;
-import fr.polytech.mnia.MyProb;
 import fr.polytech.mnia.agents.Agent;
+import fr.polytech.mnia.strategies.StratIterPolicy;
 import fr.polytech.mnia.strategies.StratIterValue;
-import java.util.List;
 
-public class EnvTicTacToe implements Env {
-	protected Agent agent;
-	protected State currentState;
-	protected int iteration = 1;
-	protected int maxIterations = 100;
-
+public class EnvTicTacToe extends Env {
 	public EnvTicTacToe(String typeAlgo, State initialState) {
+		super(initialState);
 		if (typeAlgo.equals("iterValue")) {
 			agent = new Agent(this, new StratIterValue(this, 0.001));
 		} else if (typeAlgo.equals("iterPolicy")) {
-			throw new IllegalArgumentException("iterPolicy is not implemented yet.");
-//			agent = new Agent(this, new StratIterPolicy(this, 0.001));
+			agent = new Agent(this, new StratIterPolicy(this, 0.8, 0.001));
 		} else {
 			throw new IllegalArgumentException("Unknown algo: " + typeAlgo);
-		}
-
-		if (initialState != null) {
-			currentState = initialState;
-		} else {
-			throw new IllegalArgumentException("initialState is null");
 		}
 	}
 
 	public EnvTicTacToe(String typeAlgo, State initialState, int maxIterations) {
-		this(typeAlgo, initialState);
-		this.maxIterations = maxIterations;
-	}
-
-	@Override
-	public void execAction(Transition transToApply) {
-		currentState = currentState.perform(transToApply.getName(), transToApply.getParameterPredicate()).explore();
+		super(initialState);
+		if (typeAlgo.equals("iterValue")) {
+			agent = new Agent(this, new StratIterValue(this, 0.001), maxIterations);
+		} else if (typeAlgo.equals("iterPolicy")) {
+			agent = new Agent(this, new StratIterPolicy(this, 0.8, 0.001), maxIterations);
+		} else {
+			throw new IllegalArgumentException("Unknown algo: " + typeAlgo);
+		}
 	}
 
 	@Override
@@ -46,6 +35,8 @@ public class EnvTicTacToe implements Env {
 		return getReward(futureState);
 	}
 
+	/** Fonction complémentaire
+	 */
 	public double getReward(State state) {
 		if (state.eval("win(0)").toString().equalsIgnoreCase("TRUE")) {
 			return 5.0;
@@ -56,20 +47,5 @@ public class EnvTicTacToe implements Env {
 		} else {
 			return -0.05;
 		}
-	}
-
-	@Override
-	public List<Transition> getActions() {
-		return this.currentState.getOutTransitions();
-	}
-
-	@Override
-	public void printAgent() {
-		System.out.println(agent);
-	}
-
-	@Override
-	public State getCurrentState() {
-		return currentState;
 	}
 }
