@@ -13,63 +13,71 @@ public class StratEGreedy extends StratBandit {
 	protected Random rand = new Random();
 
 	public StratEGreedy(EnvSimple env) {
+		super(env);
 		this.tauxApprentissage = 0.2;
 		this.facteurDiscount = 0.9;
 		this.facteurExploratoire = 0.2;
-		this.limiteConvergence = 0.00001;
-		this.env = env;
+		this.seuilConvergence = 0.00001;
 	}
 
 	public StratEGreedy(EnvSimple env, double limiteConvergence) {
 		this(env);
-		this.limiteConvergence = limiteConvergence;
+		this.seuilConvergence = limiteConvergence;
 	}
 
 	public StratEGreedy(EnvSimple env, double tauxApprentissage, double facteurDiscount, double facteurExploratoire) {
+		super(env);
 		this.tauxApprentissage = tauxApprentissage;
 		this.facteurDiscount = facteurDiscount;
 		this.facteurExploratoire = facteurExploratoire;
-		this.limiteConvergence = 0.00001;
+		this.seuilConvergence = 0.00001;
 	}
 
 	public StratEGreedy(EnvSimple env, double tauxApprentissage, double facteurDiscount, double facteurExploratoire, double limiteConvergence) {
 		this(env, tauxApprentissage, facteurDiscount, facteurExploratoire);
-		this.limiteConvergence = limiteConvergence;
+		this.seuilConvergence = limiteConvergence;
 	}
 
 	@Override
 	public Transition choose(List<Transition> actions) {
 		Transition choice = null;
 
+		// si on tire un nombre aléatoire qui est plus petit que epsilon alors on explore
 		if (rand.nextDouble() < facteurExploratoire) {
 			choice = actions.get(rand.nextInt(actions.size()));
-		} else {
+		}
+		// sinon on utilise notre table
+		else {
 			choice = notRandChoice(actions);
 		}
 
 		return choice;
 	}
 
+	/**
+	 * Effectue un choix non aléatoire qui sélectionne l'action possédant la plus grande valeur
+	 * @param actions : Liste des actions parmi lesquelles faire un choix
+	 * @return l'action choisie
+	 */
 	private Transition notRandChoice(List<Transition> actions) {
-		Double lastVal = 0.0;
+		Double lastVal = Double.NEGATIVE_INFINITY;
 		Transition choice = null;
 
+		// parcours de toutes les actions
 		for (Transition action : actions) {
 			String actionName = action.getParameterValues().get(0);
 
+			// si l'action n'existe pas dans la table de l'agent
 			if (!table.containsKey(actionName)) {
 				table.put(actionName, defaultTableValue);
 			}
 
+			// si la valeur stockée dans la table est plus grande que la valeur actuellement retenue
 			if (table.get(actionName) > lastVal) {
+				// on retient l'action courante
 				lastVal = table.get(actionName);
 				choice = action;
 			}
-
-		}
-
-		if (choice == null) {
-			choice = actions.get(0);
 		}
 
 		return choice;
@@ -85,18 +93,8 @@ public class StratEGreedy extends StratBandit {
 				actionName,
 				table.get(actionName) + tauxApprentissage * (reward + facteurDiscount * env.getReward(future) - table.get(actionName)));
 
-		if (Math.abs(table.get(actionName) - lastValue) < limiteConvergence && table.get(actionName) != lastValue) {
+		if (Math.abs(table.get(actionName) - lastValue) < seuilConvergence && table.get(actionName) != lastValue) {
 			convergenceAtteinte = true;
 		}
-	}
-
-	@Override
-	public boolean convergenceAtteinte() {
-		return convergenceAtteinte;
-	}
-
-	@Override
-	public String printTable() {
-		return table.toString();
 	}
 }
