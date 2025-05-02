@@ -20,6 +20,17 @@ public abstract class Env {
 		}
 	}
 
+	/**
+	 * Permet de modifier l'agent
+	 * @param agent L'agent à définir comme nouvel agent de l'environnement, ne doit PAS être null
+	 */
+	public void setAgent(Agent agent) {
+		if (agent == null) {
+			throw new IllegalArgumentException("agent is null !");
+		}
+		this.agent = agent;
+	}
+
 	/** Exécute l'action donnée sur l'état courant puis passe l'état courant à l'état résultant de l'action
 	 */
 	public void execAction(Transition transToApply) {

@@ -23,8 +23,8 @@ public abstract class StratBandit implements Strategy {
 
 	@Override
 	public void learn() {
-		// avant de lancer l'apprentissage, on récupère l'agent depuis l'environnement
-		if (agent == null) { // possible car l'agent de l'environnement n'est pas changeable
+		// avant de lancer l'apprentissage, on récupère l'agent depuis l'environnement si besoin
+		if (agent == null || env.getAgent() != agent) {
 			agent = env.getAgent();
 		}
 		// remise à l'état initial
