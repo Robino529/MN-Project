@@ -16,6 +16,7 @@ public class Agent {
 	public Agent(Env env, Strategy strategy) {
 		this.env = env;
 		this.strategy = strategy;
+		env.setAgent(this);
 		this.maxIterations = 100;
 	}
 
