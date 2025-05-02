@@ -20,11 +20,11 @@ public class TicTacToeRunner extends Runner{
      * et l'affiche de manière plus jolie et compréhensible
      */
     public void execSequence() throws Exception {
-//        TODO : Implémenter l'utilisation des tests
+//        TODO : Tester que ça fonctionne
 //        Env envUsed = createEnv("iterValue");
-//        Env envUsed = createEnv("iterPolicy");
+        Env envUsed = createEnv("iterPolicy");
 //        Env envUsed = createEnv("iterPolicyWithImprovement");
-//        envUsed.getAgent().learn();
+        envUsed.getAgent().learn();
 
         String win1, win0 ;
         win1 = state.eval("win(1)").toString() ;
