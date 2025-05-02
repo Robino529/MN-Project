@@ -1,24 +1,31 @@
-package fr.polytech.mnia.tools;
+package fr.polytech.mnia.envs;
 
 import de.prob.statespace.State;
 import de.prob.statespace.Transition;
 import fr.polytech.mnia.MyProb;
+import fr.polytech.mnia.strategies.StratBanditGradient;
+import fr.polytech.mnia.strategies.StratEGreedy;
+import fr.polytech.mnia.strategies.StratUCB;
+import fr.polytech.mnia.agents.Agent;
+import fr.polytech.mnia.utils.convergenceAtteinte;
 
 import java.util.List;
 
-public class Env {
-	Agent agent;
-	State currentState;
-	int iteration = 1;
-	int maxIterations = 100;
+// TODO : Refaire l'architecture environnement / agent
 
-	public Env(String typeAlgo, State initialState) {
+public class EnvSimple implements Env {
+	protected Agent agent;
+	protected State currentState;
+	protected int iteration = 1;
+	protected int maxIterations = 100;
+
+	public EnvSimple(String typeAlgo, State initialState) {
 		if (typeAlgo.equals("e-greedy")) {
-			agent = new AgentEGreedy(this);
+			agent = new Agent(this, new StratEGreedy(this, 0.001));
 		} else if (typeAlgo.equals("ucb")) {
-			agent = new AgentUCB(this);
+			agent = new Agent(this, new StratUCB(this, 0.001));
 		} else {
-			agent = new AgentBandit(this);
+			agent = new Agent(this, new StratBanditGradient(this, 0.001));
 		}
 
 		if (initialState != null) {
@@ -28,11 +35,12 @@ public class Env {
 		}
 	}
 
-	public Env(String typeAlgo, State initialState, int maxIterations) {
+	public EnvSimple(String typeAlgo, State initialState, int maxIterations) {
 		this(typeAlgo, initialState);
 		this.maxIterations = maxIterations;
 	}
 
+	@Override
 	public void start(MyProb animator) {
 		for (iteration = 1; iteration <= maxIterations; iteration++) {
 			try {
@@ -46,6 +54,7 @@ public class Env {
 		// System.out.println("Itérations réalisées = "+(iteration-1));
 	}
 
+	@Override
 	public State execAction() {
 		Transition transToApply = agent.choose(getActions());
 		double reward = getReward(transToApply);
@@ -55,6 +64,7 @@ public class Env {
 		return currentState;
 	}
 
+	@Override
 	public double getReward(Transition transition) {
 		State futureState = currentState.perform(transition.getName(), transition.getParameterPredicate()).explore();
 		return getReward(futureState.eval("res").toString().equalsIgnoreCase("OK"));
@@ -68,11 +78,23 @@ public class Env {
 		}
 	}
 
+	@Override
+	public int getIteration() {
+		return iteration;
+	}
+
+	@Override
 	public List<Transition> getActions() {
 		return this.currentState.getOutTransitions();
 	}
 
+	@Override
 	public void printAgent() {
 		System.out.println(agent);
+	}
+
+	@Override
+	public State getCurrentState() {
+		return currentState;
 	}
 }

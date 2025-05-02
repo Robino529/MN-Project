@@ -1,7 +1,6 @@
 package fr.polytech.mnia;
 
-import fr.polytech.mnia.tools.Env;
-import fr.polytech.mnia.tools.EnvYT;
+import fr.polytech.mnia.envs.EnvYT;
 
 public class YTRunner extends Runner {
 	/*
@@ -26,11 +25,11 @@ public class YTRunner extends Runner {
 	}
 
 	public void execAuto(String typeAlgo) {
-		EnvYT env = new EnvYT(typeAlgo, state);
+		EnvYT env = new EnvYT(typeAlgo, state, 10000);
 
 		env.start(animator);
 
-		System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent ###########");
+		System.out.println("\n######### TABLE "+typeAlgo+" de l'Agent (avec "+(env.getIteration()-1)+" iterations) ###########");
 		env.printAgent();
 	}
 
