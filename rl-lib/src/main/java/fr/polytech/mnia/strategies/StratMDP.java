@@ -26,7 +26,7 @@ public abstract class StratMDP implements Strategy {
 
 	protected StratMDP(Env env, double seuilConvergence) {
 		this.env = env;
-		this.discount = 0.8;
+		this.discount = 0.9;
 		this.seuilConvergence = seuilConvergence;
 		this.valueTransition = new HashMap<>();
 		this.policy = new HashMap<>();
